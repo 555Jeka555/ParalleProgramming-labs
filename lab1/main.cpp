@@ -5,9 +5,6 @@
 
 DWORD WINAPI ThreadProc(CONST LPVOID lpParam)
 {
-//
-// ?? тут выполняется полезная работа потока
-//
     int threadNumber = *static_cast<int*>(lpParam);
 
     Sleep(250);
@@ -16,7 +13,7 @@ DWORD WINAPI ThreadProc(CONST LPVOID lpParam)
 
     Sleep(250);
 
-    ExitThread(0); // функция устанавливает код завершения потока в 0
+    ExitThread(0);
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -25,7 +22,6 @@ int _tmain(int argc, _TCHAR* argv[])
     std::cout << "Введите кол-во потоков" << std::endl;
     std::cin >> n;
 
-// создание двух потоков
     HANDLE* handles = new HANDLE[n];
     for (int i = 0; i < n; i++)
     {
@@ -38,7 +34,12 @@ int _tmain(int argc, _TCHAR* argv[])
         ResumeThread(handles[i]);
     }
 
-// ожидание окончания работы двух потоков
     WaitForMultipleObjects(n, handles, true, INFINITE);
+
+    for (int i = 0; i < n; ++i) {
+        CloseHandle(handles[i]);
+    }
+
+    delete[] handles;
     return 0;
 }
