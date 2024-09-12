@@ -6,10 +6,11 @@
 
 DWORD WINAPI ThreadProc(CONST LPVOID lpParam)
 {
-    int threadNumber = *static_cast<int*>(lpParam);
+    int* threadNumber = static_cast<int*>(lpParam);
 
-    std::osyncstream(std::cout) << "Полезная работа потока " << threadNumber << "\n";
+    std::osyncstream(std::cout) << "Полезная работа потока " << *threadNumber << "\n";
 
+    delete threadNumber;
     ExitThread(0);
 }
 
@@ -20,12 +21,10 @@ int _tmain(int argc, _TCHAR* argv[])
     std::cin >> n;
 
     HANDLE* handles = new HANDLE[n];
-//    int** threadNums = new int*[n];
     for (int i = 0; i < n; i++)
     {
         int* threadNum = new int(i + 1);
         handles[i] = CreateThread(NULL, 0, &ThreadProc, threadNum, 0, NULL);
-//        threadNums[i] = threadNum;
     }
 
     WaitForMultipleObjects(n, handles, true, INFINITE);
@@ -34,7 +33,6 @@ int _tmain(int argc, _TCHAR* argv[])
         CloseHandle(handles[i]);
     }
 
-//    delete[] threadNums;
     delete[] handles;
     return 0;
 }
