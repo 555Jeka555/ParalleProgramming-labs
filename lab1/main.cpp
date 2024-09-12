@@ -1,13 +1,14 @@
 #include <windows.h>
 #include <string>
 #include <iostream>
+#include <syncstream>
 #include <tchar.h>
 
 DWORD WINAPI ThreadProc(CONST LPVOID lpParam)
 {
     int threadNumber = *static_cast<int*>(lpParam);
 
-    std::cout << "Полезная работа потока " << threadNumber << "\n";
+    std::osyncstream(std::cout) << "Полезная работа потока " << threadNumber << "\n";
 
     ExitThread(0);
 }
