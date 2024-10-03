@@ -180,23 +180,6 @@ Pixel GetAverageColor(Bitmap const& img, int x, int y)
         }
     }
 
-
-//    if (x == 0 || x == img.width() - 1 || y == 0 || y == img.height() - 1) {
-//        return img.get(x, y);
-//    }
-//
-//    vector<optional<Pixel>> pixels = {
-//        img.get(x, y),
-//        img.get(x, y - 1),
-//        img.get(x, y + 1),
-//        img.get(x - 1, y),
-//        img.get(x - 1, y - 1),
-//        img.get(x - 1, y + 1),
-//        img.get(x + 1, y),
-//        img.get(x + 1, y - 1),
-//        img.get(x + 1, y + 1),
-//    };
-
     return Average(pixels);
 }
 
